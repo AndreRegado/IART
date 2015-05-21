@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Robot.Box;
+import Robot.Boxes;
 import Robot.Robot;
 import Robot.Wall;
 import Robot.Warehouse;
@@ -50,7 +50,7 @@ public class Reader {
 			}
 			else if(parts[0].substring(0,5).equals("caixa")){
 				float weight=Float.parseFloat(parts[3].substring(5));
-				Box box=new Box(x,y,weight);
+				Boxes box=new Boxes(x,y,weight);
 				return box;
 			}
 			else if(parts[0].substring(0,7).equals("armazem")){

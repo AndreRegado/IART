@@ -8,7 +8,8 @@ public class Wall{
 	private Point p2;
 	//Vai ser preciso criar 2 pontos para contruir a "parede"
 	public Wall(int x1, int y1, int x2, int y2) {
-		
+		p1 = new Point(x1,y1);
+		p2 = new Point(x2, y2);
 		// TODO Auto-generated constructor stub
 	}
 	

@@ -3,6 +3,8 @@ package Astar;
 import java.util.ArrayList;
 import java.util.List;
 
+import Robot.Wall;
+
 public class Astar {
 
 	List<State> openList = new ArrayList<State>();
@@ -31,16 +33,43 @@ public class Astar {
 
 		return state;
 	}
-
-	public boolean Exist(int x, int y) {
-
-		for (int i = 0; i < closeList.size(); i++) {
-			if (closeList.get(i).getX() == x && closeList.get(i).getY() == y) {
+	
+	public boolean ExistObstacles(int x, int y, List<Wall> obstacles) {
+		
+		for(int i =0; i < obstacles.size(); i++) {
+			/*System.out.print(obstacles.get(i).getX1());
+			System.out.print(obstacles.get(i).getY1());
+			System.out.print(obstacles.get(i).getX2());
+			System.out.print(obstacles.get(i).getY2());
+			System.out.print("COORD");
+			System.out.print(x);
+			System.out.print(y);*/
+			if(obstacles.get(i).getX1() == x && obstacles.get(i).getY1() == y ||
+					obstacles.get(i).getX2() == x && obstacles.get(i).getY2() == y){
+				System.out.println("ALTO JA CRL");
 				return true;
 			}
 		}
+		
 		return false;
 	}
+
+	public boolean Exist(int x, int y, List<Wall> obstacles) {
+		
+		for (int i = 0; i < closeList.size(); i++) {
+			if(ExistObstacles(x,y,obstacles)) {
+				System.out.println("ALTO CRL");
+				return true;
+			}
+			
+			if (closeList.get(i).getX() == x && closeList.get(i).getY() == y) {
+				return true;
+			}
+			
+		}
+		return false;
+	}
+	
 	
 	public boolean ChegouDestino(State target) {
 
@@ -60,7 +89,7 @@ public class Astar {
 		}
 	}
 
-	public void AStar(State initial, State target) {
+	public void AStar(State initial, State target, List<Wall> obstacles) {
 
 		// Limpar as listas
 		openList.clear();
@@ -85,25 +114,28 @@ public class Astar {
 				// Limpar as lista open
 				openList.clear();
 			}
-			printList();
+			//printList();
 			//System.out.println("MUDA");
 			
 			// hipotese 1 X+1
 			int x1 = initial.getX() + 1;
 			int y = initial.getY();
-			if (!Exist(x1, y)) {
+			if (!Exist(x1, y, obstacles)) {
 				State h1 = new State(x1, y);
 				h1.setG(1);
 				h1.setH(Heuristic(h1, target));
 				h1.setF(h1.getG() + h1.getH());
 				openList.add(h1);
 			}
+			else {
+				System.out.println("PO CRL");
+			}
 			
 
 			// hipotese 2 Y+1
 			int x = initial.getX();
 			int y1 = initial.getY() + 1;
-			if (!Exist(x, y1)) {
+			if (!Exist(x, y1, obstacles)) {
 				State h2 = new State(x, y1);
 				h2.setG(1);
 				h2.setH(Heuristic(h2, target));
@@ -113,7 +145,7 @@ public class Astar {
 			
 			// hipotese 3 X-1
 			int x11 = initial.getX() - 1;
-			if (!Exist(x11, y)) {
+			if (!Exist(x11, y, obstacles)) {
 				State h3 = new State(x11, y);
 				h3.setG(1);
 				h3.setH(Heuristic(h3, target));
@@ -123,7 +155,7 @@ public class Astar {
 			
 			// hipotese 4 Y-1
 			int y11 = initial.getY() - 1;
-			if (!Exist(x, y1)) {
+			if (!Exist(x, y1, obstacles)) {
 				State h4 = new State(x, y1);
 				h4.setG(1);
 				h4.setH(Heuristic(h4, target));
@@ -133,7 +165,7 @@ public class Astar {
 			
 
 			// hipotese 5 X+1 e Y+1
-			if (!Exist(x1, y1)) {
+			if (!Exist(x1, y1, obstacles)) {
 				State h5 = new State(x1, y1);
 				h5.setG(1);
 				h5.setH(Heuristic(h5, target));
@@ -142,7 +174,7 @@ public class Astar {
 			}
 			
 			// hipotese 6 X-1 e Y-1
-			if (!Exist(x11, y11)) {
+			if (!Exist(x11, y11, obstacles)) {
 				State h6 = new State(x11, y11);
 				h6.setG(1);
 				h6.setH(Heuristic(h6, target));
@@ -151,7 +183,7 @@ public class Astar {
 			}
 
 			// hipotese 7 X+1 e Y-1
-			if (!Exist(x1, y11)) {
+			if (!Exist(x1, y11, obstacles)) {
 				State h7 = new State(x1, y11);
 				h7.setG(1);
 				h7.setH(Heuristic(h7, target));
@@ -160,7 +192,7 @@ public class Astar {
 			}
 			
 			// hipotese 8 X-1 e Y+1
-			if (!Exist(x1, y1)) {
+			if (!Exist(x1, y1, obstacles)) {
 				State h8 = new State(x1, y1);
 				h8.setG(1);
 				h8.setH(Heuristic(h8, target));

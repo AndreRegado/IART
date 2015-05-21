@@ -14,7 +14,7 @@ public class main {
 	        
 	        Robot rob=null;
 	        Warehouse ware=null;
-	        List<Box> boxes = new ArrayList<Box>();
+	        List<Boxes> boxes = new ArrayList<Boxes>();
 	        List<Wall> obstacles = new ArrayList<Wall>();
 	        System.out.println(allobject);
 	        int size=allobject.size();
@@ -25,8 +25,8 @@ public class main {
 	        		rob=(Robot) what;
 	        	else if(what instanceof Warehouse)
 	        		ware=(Warehouse) what;
-	        	else if(what instanceof Box)
-	        		boxes.add((Box) what);
+	        	else if(what instanceof Boxes)
+	        		boxes.add((Boxes) what);
 	        	else if(what instanceof Wall)
 	        		obstacles.add((Wall) what);
 	        	else{
@@ -35,11 +35,11 @@ public class main {
 	        	}
 	        }
 	        
-	        
+	        System.out.println("MEUUU");
 	        State initial = new State (1,1);
-	        State target =  new State (3,3);
+	        State target =  new State (4,1);
 	        Astar A = new Astar();
-	        A.AStar(initial, target);
+	        A.AStar(initial, target, obstacles);
 	        A.printList();
 	    }
 
