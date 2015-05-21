@@ -1,26 +1,23 @@
 package Robot;
 
-public class Robot extends Point {
-
-	public Robot(int x, int y) {
-		super(x, y);
+public class Robot{
+	private Point p;
+	private float capacity;
+	public Robot(int x, int y, float cap) {
+		p=new Point(x,y);
+		capacity=cap;
 		// TODO Auto-generated constructor stub
 	}
 
 	public int getX() {
-		return x;
+		return p.x;
 	}
 
 	public int getY() {
-		return y;
+		return p.y;
 	}
-
-	public void setX(int value) {
-		this.x = value;
-	}
-
-	public void setY(int value) {
-		this.y = value;
+	public float getCap(){
+		return capacity;
 	}
 
 }

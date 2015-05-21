@@ -1,26 +1,22 @@
 package Robot;
 
-public class Boxes extends Point {
-
-	public Boxes(int x, int y) {
-		super(x, y);
+public class Boxes{
+ private Point p;
+ private float weight;
+	public Boxes(int x, int y, float w) {
+		p=new Point(x,y);
+		weight=w;
 		// TODO Auto-generated constructor stub
 	}
 	
 	public int getX() {
-		return x;
+		return p.x;
 	}
 
 	public int getY() {
-		return y;
+		return p.y;
 	}
-
-	public void setX(int value) {
-		this.x = value;
+	public float getWeight(){
+		return weight;
 	}
-
-	public void setY(int value) {
-		this.y = value;
-	}
-
 }

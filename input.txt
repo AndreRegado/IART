@@ -1,0 +1,8 @@
+robo-> x=0 y=0 capacidade=10
+armazem-> x=1 y=1
+caixa1-> x=2 y=2 peso=5
+caixa2-> x=3 y=2 peso=7
+caixa3-> x=4 y=2 peso=1
+obstaculo1-> x1=3 y1=3 x2=4 y2=4
+obstaculo2-> x1=1 y1=3 x2=4 y2=4
+obstaculo3-> x1=2 y1=3 x2=4 y2=4

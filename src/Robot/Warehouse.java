@@ -1,26 +1,26 @@
 package Robot;
 
-public class Repository extends Point{
-
-	public Repository(int x, int y) {
-		super(x, y);
+public class Warehouse{
+	private Point p;
+	public Warehouse(int x, int y) {
+		p=new Point(x,y);
 		// TODO Auto-generated constructor stub
 	}
 	
 	public int getX() {
-		return x;
+		return p.x;
 	}
 
 	public int getY() {
-		return y;
+		return p.y;
 	}
 
 	public void setX(int value) {
-		this.x = value;
+		this.p.x = value;
 	}
 
 	public void setY(int value) {
-		this.y = value;
+		this.p.y = value;
 	}
 
 }
