@@ -1,6 +1,7 @@
 package Robot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Wall{
 	private Point p1;
@@ -24,8 +25,8 @@ public class Wall{
 	public int getY2() {
 		return p2.y;
 	}
-	public ArrayList<Point> getCoord(){
-		ArrayList<Point> x = new ArrayList<Point>();
+	public List<Point> getCoord(){
+		List<Point> x = new ArrayList<Point>();
 		x.add(p1);
 		x.add(p2);
 		return x;
