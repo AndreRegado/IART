@@ -2,7 +2,8 @@ package Robot;
 
 public class Point {
 	
-	int x,y;
+	public int x;
+	public int y;
 	
 	//construtor
 	public Point(int x, int y) {
