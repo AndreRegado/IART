@@ -1,17 +1,22 @@
 package Robot;
 import java.util.ArrayList;
+
 import java.util.List;
 
 import Parser.Reader;
 import Astar.Astar;
 import Astar.State;
+import Gui.Interface;
 public class main {
 	    public static void main(String[] args) {
 	        System.out.println("Hello, World!");
 	        Reader parser=new Reader();
 	        
+	        
 	        List<Object> allobject=parser.readFile("input.txt");
 	        
+		    Interface intObj = new Interface();
+	       
 	        Robot rob=null;
 	        Warehouse ware=null;
 	        List<Boxes> boxes = new ArrayList<Boxes>();
@@ -42,5 +47,7 @@ public class main {
 	        A.AStar(initial, target, obstacles);
 	        A.printList();
 	    }
+	   
+
 
 }
