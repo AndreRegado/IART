@@ -34,21 +34,60 @@ public class Astar {
 		return state;
 	}
 	
-	public boolean ExistObstacles(int x, int y, List<Wall> obstacles) {
+public boolean ExistObstacles(int x, int y, List<Wall> obstacles) {
 		
 		for(int i =0; i < obstacles.size(); i++) {
-			/*System.out.print(obstacles.get(i).getX1());
-			System.out.print(obstacles.get(i).getY1());
-			System.out.print(obstacles.get(i).getX2());
-			System.out.print(obstacles.get(i).getY2());
-			System.out.print("COORD");
-			System.out.print(x);
-			System.out.print(y);*/
-			if(obstacles.get(i).getX1() == x && obstacles.get(i).getY1() == y ||
-					obstacles.get(i).getX2() == x && obstacles.get(i).getY2() == y){
-				System.out.println("ALTO JA CRL");
-				return true;
+			
+			//esta na horizontal
+			if(obstacles.get(i).getY2() == obstacles.get(i).getY1()  && obstacles.get(i).getY1() == y) {
+				if(obstacles.get(i).getX2() - obstacles.get(i).getX1() > 0)
+					if(x <= obstacles.get(i).getX2() && x >= obstacles.get(i).getX1()){
+						return true;
+						
+					}
+				else {
+					if(x <= obstacles.get(i).getX1() && x >= obstacles.get(i).getX2()){
+						return true;
+					}
+				}
+				continue;
 			}
+			//esta na vertical
+			else if (obstacles.get(i).getX2() == obstacles.get(i).getX1() && obstacles.get(i).getX1() == x) {
+				if(obstacles.get(i).getY2() - obstacles.get(i).getY1() > 0)
+					if(y <= obstacles.get(i).getY2() && y >= obstacles.get(i).getY1()){
+						return true;
+					}
+				else {
+					if(y <= obstacles.get(i).getY1() && y >= obstacles.get(i).getY2()){
+						return true;
+					}
+				}
+				continue;
+			}
+			/*else {
+				if((obstacles.get(i).getY2() - obstacles.get(i).getY1() > 0 && y <= obstacles.get(i).getY2() && y >= obstacles.get(i).getY1()) ||  (obstacles.get(i).getY2() - obstacles.get(i).getY1() < 0 && y <= obstacles.get(i).getY1() && y >= obstacles.get(i).getY2())) {
+					//eq da reta: y = mx+b
+					float m = (obstacles.get(i).getY2()- obstacles.get(i).getY1()) / (obstacles.get(i).getX2()-obstacles.get(i).getX1());
+					float b = obstacles.get(i).getY1() - m * obstacles.get(i).getX1();
+					
+					float reta =m*x+b;
+					
+					System.out.print("M- " + m + " B- " + b +" X- "+x+"Y- "+y +" ");
+					
+					System.out.print(Math.floor((y-b)/m));
+					if(x ==  (y-b)/m || x ==  Math.floor((y-b)/m)+1 || x == Math.floor((y-b)/m)-1) {
+						System.out.println(" OBS");
+						return true;
+					}
+					System.out.print("\n");
+				}
+			}*/
+			
+			/*if(obstacles.get(i).getX1() == x && obstacles.get(i).getY1() == y ||
+					obstacles.get(i).getX2() == x && obstacles.get(i).getY2() == y ){
+				return true;
+			}*/
 		}
 		
 		return false;
@@ -57,16 +96,17 @@ public class Astar {
 	public boolean Exist(int x, int y, List<Wall> obstacles) {
 		
 		for (int i = 0; i < closeList.size(); i++) {
-			if(ExistObstacles(x,y,obstacles)) {
-				System.out.println("ALTO CRL");
-				return true;
-			}
 			
 			if (closeList.get(i).getX() == x && closeList.get(i).getY() == y) {
 				return true;
 			}
 			
 		}
+		
+		if(ExistObstacles(x,y,obstacles)) {
+			return true;
+		}
+		
 		return false;
 	}
 	
