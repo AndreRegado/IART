@@ -47,13 +47,14 @@ public class main {
 		        State target =  new State (obstaculos.getX2(),obstaculos.getY2());
 		        A_star A = new A_star(initial, target, o, "Manhattan","4d");
 		        obs.addAll(A.start());
-		        A.printList();
+		       // A.printList();
 	        }
 	        
 	        State initial = new State (1,1,null,0,0);
 	        State target =  new State (5,5);
-	        A_star A = new A_star(initial, target, obs, "Diagonal","8d");
-	        A.printList();
+	        A_star B = new A_star(initial, target, obs, "Diagonal","8d");
+	        B.start();
+	        B.printList();
 	        
 	        
 	    }
