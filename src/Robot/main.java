@@ -14,7 +14,6 @@ public class main {
 	        
 	        List<Object> allobject=parser.readFile("input.txt");
 	        
-		    Interface intObj = new Interface();
 	       
 	        Robot rob=null;
 	        Warehouse ware=null;
@@ -38,7 +37,7 @@ public class main {
 	        		System.exit(4);
 	        	}
 	        }
-	        
+	        	
 
 	        List<Point> obs = new ArrayList<Point>();
 	        List<Point> o = new ArrayList<Point>();
@@ -56,6 +55,7 @@ public class main {
 	        B.start();
 	        B.printList();
 	        
+	        Interface intObj = new Interface(rob, ware, boxes, obs);
 	        
 	    }
 	   
