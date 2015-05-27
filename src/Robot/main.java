@@ -6,7 +6,7 @@ import Parser.Reader;
 import Astar.A_star;
 import Astar.State;
 import Gui.Interface;
-public class main {
+public class Main {
 	    public static void main(String[] args) {
 	        System.out.println("Hello, World!");
 	        Reader parser=new Reader();
@@ -41,22 +41,38 @@ public class main {
 
 	        List<Point> obs = new ArrayList<Point>();
 	        List<Point> o = new ArrayList<Point>();
+	        
+	        
 	        for(Wall obstaculos : obstacles){
 	        	State initial = new State (obstaculos.getX1(),obstaculos.getY1(),null,0,0);
 		        State target =  new State (obstaculos.getX2(),obstaculos.getY2());
-		        A_star A = new A_star(initial, target, o, "Manhattan","4d");
+		        A_star A = new A_star(initial, target, o, "Manhattan","4d",null);
 		        obs.addAll(A.start());
 		       // A.printList();
 	        }
 	        
+	        int counter=0;
+	        List<List<Point>> todosPoints = new ArrayList<List<Point>>();
+	        int[] custo = new int[boxes.size()];
+	        int[] peso = new int[boxes.size()];
+	        for(Box box: boxes){
+	        	State initial = new State (rob.getX(),rob.getY(),null,0,0);
+	        	State target =  new State (box.getX(),box.getY());
+	        	A_star B = new A_star(initial, target, obs, "Diagonal","8d",null);
+	        	todosPoints.add(B.start());
+	        	custo[counter]=B.getCost();
+	        	peso[counter]=(int) box.getWeight();
+	        	counter++;
+	        	B.printList();
+	        }
+	        
 	        State initial = new State (rob.getX(),rob.getY(),null,0,0);
-	        State target =  new State (5,5);
-	        A_star B = new A_star(initial, target, obs, "Diagonal","8d");
-	        B.start();
-	        B.printList();
+        	State target =  new State (ware.getX(),ware.getY());
+	        A_star C = new A_star(initial, target, obs, "Robot","8d",boxes);
+	        C.start();
+	        
 	        
 	        Interface intObj = new Interface(rob, ware, boxes, obs);
-	        
 	    }
 	   
 

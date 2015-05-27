@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import Robot.Box;
 import Robot.Point;
 
 
@@ -11,11 +12,14 @@ public class A_star {
 	List<State> closeList = new ArrayList<State>();
 	List<Point> obstacles = new ArrayList<Point>();
 	List<Point> points = new ArrayList<Point>();
+	List<Box> boxes = new ArrayList<Box>();
 	Heuristic heuristic = new Heuristic();
 	State goal,inicio;
+	int maxCost;
 	
 	String heuristicOption,directions;
-	public A_star(State inicial, State goal1,List<Point> obs, String heuristicOpt, String direction){
+	public A_star(State inicial, State goal1,List<Point> obs, String heuristicOpt, String direction,List<Box> box){
+		boxes=box;
 		directions=direction;
 		inicio=inicial;
 		goal=goal1;
@@ -37,8 +41,14 @@ public class A_star {
 			
 			
 		}
+		maxCost=goal.getF();
 		backtrack(goal);
+		points.remove(points.size() -1);
+		
 		return points;
+	}
+	public int getCost(){
+		return goal.getF();
 	}
 	private void backtrack(State estado){
 			
@@ -85,6 +95,7 @@ public class A_star {
 		if(ne.comparar(goal))
 		{
 			goal.setParent(ne);
+			goal.setF(ne.getF());
 			return 1;
 		}
 		return 0;
@@ -93,8 +104,7 @@ public class A_star {
 		if(diagonal && directions.equals("4d"))
 			return 0;
 		State estadonovo= new State(ponto.x,ponto.y, estado,0,0);
-		if(closeList.contains(estadonovo))
-			return 0;
+		
 		if(isWall(ponto))
 			return 0;
 		//////////////////////////7777
@@ -107,20 +117,30 @@ public class A_star {
 						
 		
 		int index,sizeOpen=openList.size(),sizeClose=closeList.size();
-		for(index=0;index<sizeOpen;index++){
-			if(openList.get(index).getPoint().equals(estadonovo.getPoint())){
-				if(openList.get(index).getF()>estadonovo.getF()){
-					openList.remove(index);
-					openList.add(estadonovo);
+		if(openList.contains(estadonovo)){
+			for(index=0;index<sizeOpen;index++){
+				if(openList.get(index).getPoint().equals(estadonovo.getPoint())){
+					if(openList.get(index).getF()>estadonovo.getF()){
+						openList.remove(index);
+						openList.add(estadonovo);
+						return 0;
+					}
 					return 0;
-				}
-				break;
+				}		
 			}
-				
 		}
-		
-			
-			
+		if(closeList.contains(estadonovo)){
+			for(index=0;index<sizeClose;index++){
+				if(closeList.get(index).getPoint().equals(estadonovo.getPoint())){
+					if(closeList.get(index).getF()>estadonovo.getF()){
+						closeList.remove(index);
+						closeList.add(estadonovo);
+						return 0;
+					}
+					return 0;
+				}		
+			}
+		}
 		
 		openList.add(estadonovo);
 		return 0;
@@ -135,6 +155,8 @@ public class A_star {
 	private int findH(State estado){
 		if(heuristicOption.equals("Manhattan"))
 			return heuristic.Manhattan(estado, goal);
+		else if(heuristicOption.equals("Diagonal"))
+			return heuristic.Diagonal(estado, goal);
 		else
 			return heuristic.Diagonal(estado, goal);
 	}
