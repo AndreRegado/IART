@@ -57,38 +57,36 @@ public class A_star {
 		Point ponto = new Point(estado.getX(),estado.getY());
 		ponto.x-=1;
 		ponto.y-=1;
-		if(checkPoint(estado, ponto,true)==1)
-			return 1;
+		checkPoint(estado, ponto,true);
 		
 		ponto.y+=1;
-		if(checkPoint(estado, ponto,false)==1)
-			return 1;
+		checkPoint(estado, ponto,false);
 		
 		ponto.y+=1;
-		if(checkPoint(estado, ponto,true)==1)
-			return 1;
+		checkPoint(estado, ponto,true);
 		
 		ponto.x+=1;
-		if(checkPoint(estado, ponto,false)==1)
-			return 1;
+		checkPoint(estado, ponto,false);
 		
 		ponto.x+=1;
-		if(checkPoint(estado, ponto,true)==1)
-			return 1;
+		checkPoint(estado, ponto,true);
 		
 		ponto.y-=1;
-		if(checkPoint(estado, ponto,false)==1)
-			return 1;
+		checkPoint(estado, ponto,false);
 		
 		ponto.y-=1;
-		if(checkPoint(estado, ponto,true)==1)
-			return 1;
+		checkPoint(estado, ponto,true);
 		
 		ponto.x-=1;
-		if(checkPoint(estado, ponto,false)==1)
-			return 1;
+		checkPoint(estado, ponto,false);
 		
 		Collections.sort(openList,State.StateComparator);
+		State ne =openList.get(0);
+		if(ne.comparar(goal))
+		{
+			goal.setParent(ne);
+			return 1;
+		}
 		return 0;
 	}
 	private int checkPoint(State estado, Point ponto,boolean diagonal){
@@ -106,13 +104,7 @@ public class A_star {
 		///////////////////////////////////heuristica
 		estadonovo.setH(h);	
 		estadonovo.setF(f);
-				
-		if(estadonovo.comparar(goal))
-		{
-			goal.setParent(estado);
-			return 1;
-		}
-		
+						
 		
 		int index,sizeOpen=openList.size(),sizeClose=closeList.size();
 		for(index=0;index<sizeOpen;index++){
@@ -130,11 +122,11 @@ public class A_star {
 			
 			
 		
-			openList.add(estadonovo);
+		openList.add(estadonovo);
 		return 0;
 	}
 	private int findG(boolean diag,State estado){
-		if(diag)
+		if(!diag)
 			return estado.getG()+10;
 		else
 			return estado.getG()+14;
