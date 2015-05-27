@@ -6,7 +6,7 @@ import Parser.Reader;
 import Astar.A_star;
 import Astar.State;
 import Gui.Interface;
-public class Main {
+public class main {
 	    public static void main(String[] args) {
 	        System.out.println("Hello, World!");
 	        Reader parser=new Reader();
@@ -66,15 +66,16 @@ public class Main {
 	        	B.printList();
 	        }
 	        
-	        State initial = new State (rob.getX(),rob.getY(),null,0,0);
-        	State target =  new State (ware.getX(),ware.getY());
-	        A_star C = new A_star(initial, target, obs, "Robot","8d",boxes);
-	        C.start();
+	      //  State initial = new State (rob.getX(),rob.getY(),null,0,0);
+	      //  System.out.println("XXXX: "+ware.getX()+"  YYY: "+ware.getY());
+        //	State target =  new State (ware.getX(),ware.getY());
+	       // A_star C = new A_star(initial, target, obs, "Robot","8d",boxes);
+	       // C.start();
 	        
 	        
 	        Interface intObj = new Interface(rob, ware, boxes, obs);
 	    }
 	   
 
-
+	    
 }
