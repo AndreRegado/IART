@@ -4,6 +4,7 @@ import java.util.List;
 
 import Parser.Reader;
 import Astar.A_star;
+import Astar.A_star_Robot;
 import Astar.State;
 import Gui.Interface;
 public class main {
@@ -46,7 +47,7 @@ public class main {
 	        for(Wall obstaculos : obstacles){
 	        	State initial = new State (obstaculos.getX1(),obstaculos.getY1(),null,0,0);
 		        State target =  new State (obstaculos.getX2(),obstaculos.getY2());
-		        A_star A = new A_star(initial, target, o, "Manhattan","4d",null);
+		        A_star A = new A_star(initial, target, o, "Manhattan","4d");
 		        obs.addAll(A.start());
 		       // A.printList();
 	        }
@@ -58,7 +59,7 @@ public class main {
 	        for(Box box: boxes){
 	        	State initial = new State (rob.getX(),rob.getY(),null,0,0);
 	        	State target =  new State (box.getX(),box.getY());
-	        	A_star B = new A_star(initial, target, obs, "Diagonal","8d",null);
+	        	A_star B = new A_star(initial, target, obs, "Diagonal","8d");
 	        	todosPoints.add(B.start());
 	        	custo[counter]=B.getCost();
 	        	peso[counter]=(int) box.getWeight();
@@ -66,11 +67,11 @@ public class main {
 	        	B.printList();
 	        }
 	        
-	      //  State initial = new State (rob.getX(),rob.getY(),null,0,0);
-	      //  System.out.println("XXXX: "+ware.getX()+"  YYY: "+ware.getY());
-        //	State target =  new State (ware.getX(),ware.getY());
-	       // A_star C = new A_star(initial, target, obs, "Robot","8d",boxes);
-	       // C.start();
+	        
+	        State initial = new State (rob.getX(),rob.getY(),null,0,0);
+        	State target =  new State (ware.getX(),ware.getY());
+	        A_star_Robot C = new A_star_Robot(initial, target, "Robot",boxes);
+	        C.start();
 	        
 	        
 	        Interface intObj = new Interface(rob, ware, boxes, obs);

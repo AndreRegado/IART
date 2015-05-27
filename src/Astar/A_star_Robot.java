@@ -1,27 +1,27 @@
 package Astar;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import Robot.Box;
 import Robot.Point;
 
-
-public class A_star {
+public class A_star_Robot {
 	List<State> openList = new ArrayList<State>();
 	List<State> closeList = new ArrayList<State>();
-	List<Point> obstacles = new ArrayList<Point>();
 	List<Point> points = new ArrayList<Point>();
+	List<Box> boxes = new ArrayList<Box>();
 	Heuristic heuristic = new Heuristic();
 	State goal,inicio;
 	int maxCost;
 	
-	String heuristicOption,directions;
-	public A_star(State inicial, State goal1,List<Point> obs, String heuristicOpt, String direction){
-		directions=direction;
+	String heuristicOption;
+	public A_star_Robot(State inicial, State goal1, String heuristicOpt,List<Box> box){
+		boxes=box;
 		inicio=inicial;
 		goal=goal1;
 		heuristicOption=heuristicOpt;
-		obstacles=obs;
 		openList.clear();
 		closeList.clear();
 		openList.add(inicial);
@@ -98,12 +98,9 @@ public class A_star {
 		return 0;
 	}
 	private int checkPoint(State estado, Point ponto,boolean diagonal){
-		if(diagonal && directions.equals("4d"))
-			return 0;
+		
 		State estadonovo= new State(ponto.x,ponto.y, estado,0,0);
 		
-		if(isWall(ponto))
-			return 0;
 		//////////////////////////7777
 		//calcular h e g e f
 		int g=findG(diagonal,estado),h=findH(estadonovo),f=g+h;
@@ -155,11 +152,6 @@ public class A_star {
 		else 
 			return heuristic.Diagonal(estado, goal);
 	}
-	private boolean isWall(Point ponto){
-		if(!obstacles.isEmpty())
-			if(obstacles.contains(ponto))
-				return true;
-		return false;
-	}
+	
 
 }
