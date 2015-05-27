@@ -1,7 +1,7 @@
 robo-> x=0 y=0 capacidade=10
-armazem-> x=1 y=1
-caixa1-> x=2 y=2 peso=5
-caixa2-> x=3 y=2 peso=7
-caixa3-> x=4 y=2 peso=1
+armazem-> x=4 y=5
+caixa1-> x=3 y=3 peso=5
+caixa2-> x=2 y=4 peso=7
+caixa3-> x=5 y=5 peso=1
 obstaculo1-> x=1 y=2 x=4 y=2
-obstaculo2-> x=4 y=2 x=4 y=2
+obstaculo2-> x=4 y=2 x=4 y=1
