@@ -26,6 +26,12 @@ public class Wall{
 	public int getY2() {
 		return p2.y;
 	}
+	public Point getPoint1(){
+		return p1;
+	}
+	public Point getPoint2(){
+		return p2;
+	}
 	public List<Point> getCoord(){
 		List<Point> x = new ArrayList<Point>();
 		x.add(p1);

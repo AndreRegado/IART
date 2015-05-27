@@ -1,10 +1,9 @@
 package Robot;
 import java.util.ArrayList;
-
 import java.util.List;
 
 import Parser.Reader;
-import Astar.Astar;
+import Astar.A_star;
 import Astar.State;
 import Gui.Interface;
 public class main {
@@ -19,7 +18,7 @@ public class main {
 	       
 	        Robot rob=null;
 	        Warehouse ware=null;
-	        List<Boxes> boxes = new ArrayList<Boxes>();
+	        List<Box> boxes = new ArrayList<Box>();
 	        List<Wall> obstacles = new ArrayList<Wall>();
 	        System.out.println(allobject);
 	        int size=allobject.size();
@@ -30,8 +29,8 @@ public class main {
 	        		rob=(Robot) what;
 	        	else if(what instanceof Warehouse)
 	        		ware=(Warehouse) what;
-	        	else if(what instanceof Boxes)
-	        		boxes.add((Boxes) what);
+	        	else if(what instanceof Box)
+	        		boxes.add((Box) what);
 	        	else if(what instanceof Wall)
 	        		obstacles.add((Wall) what);
 	        	else{
@@ -40,12 +39,23 @@ public class main {
 	        	}
 	        }
 	        
-	        System.out.println("MEUUU");
-	        State initial = new State (1,1);
-	        State target =  new State (4,1);
-	        Astar A = new Astar();
-	        A.AStar(initial, target, obstacles);
+
+	        List<Point> obs = new ArrayList<Point>();
+	        List<Point> o = new ArrayList<Point>();
+	        for(Wall obstaculos : obstacles){
+	        	State initial = new State (obstaculos.getX1(),obstaculos.getY1(),null,0,0);
+		        State target =  new State (obstaculos.getX2(),obstaculos.getY2());
+		        A_star A = new A_star(initial, target, o, "Manhattan","4d");
+		        obs.addAll(A.start());
+		        A.printList();
+	        }
+	        
+	        State initial = new State (1,1,null,0,0);
+	        State target =  new State (5,5);
+	        A_star A = new A_star(initial, target, obs, "Diagonal","8d");
 	        A.printList();
+	        
+	        
 	    }
 	   
 

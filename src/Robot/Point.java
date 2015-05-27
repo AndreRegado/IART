@@ -11,4 +11,21 @@ public class Point {
 		this.y=y;
 	}
 	
+	@Override
+	public boolean equals(Object object)
+	{
+	    boolean isEqual= false;
+
+	    if (object != null && object instanceof Point)
+	    {
+	        isEqual = (this.x == ((Point) object).x && this.y == ((Point) object).y);
+	    }
+
+	    return isEqual;
+	}
+
+	@Override
+	public int hashCode() {
+	    return this.x;
+	}
 }
