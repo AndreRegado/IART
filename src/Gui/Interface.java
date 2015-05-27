@@ -41,7 +41,7 @@ public class Interface extends JFrame{
 	  	private PlayButtonHandler pbHandler;
 	    private ExitButtonHandler ebHandler;
 	 
-	 public Interface(Robot ObjRobot, Warehouse ObjWare, List<Box> ObjBoxes, List<Point> ObjObstacles)
+	 public Interface(final Robot ObjRobot, Warehouse ObjWare, List<Box> ObjBoxes, List<Point> ObjObstacles)
 
 	    {	
 
@@ -75,7 +75,7 @@ public class Interface extends JFrame{
 	        background.add(playB);
 	        background.add(exitB);
 	        
-	        ImageIcon rob = new ImageIcon("images/robot.png");
+	        final ImageIcon rob = new ImageIcon("images/robot.png");
 			robot = new JLabel(rob);
 			ImageIcon box = new ImageIcon("images/box.png");
 			box2 = new JLabel(box);
@@ -146,8 +146,8 @@ public class Interface extends JFrame{
 		    int dimensaoY = maiorY - menorY;
 		    //System.out.println("Dim X" + dimensaoX + " Dim Y" + dimensaoY);
 		    
-		    int tamanhoX = 800 / dimensaoX;
-		    int tamanhoY = 600 / dimensaoY;
+		    final int tamanhoX = 800 / dimensaoX;
+		    final int tamanhoY = 600 / dimensaoY;
 		    //System.out.println("TAM X" + tamanhoX + " TAM Y" + tamanhoY);
 		    
 	        robot.setLayout(null);
@@ -173,6 +173,49 @@ public class Interface extends JFrame{
 	        background.add(robot);
 	        background.add(war2);
 	        
+	        
+	        Timer timer = new Timer(500, new ActionListener() {
+	            public void actionPerformed(ActionEvent evt) {
+	            	 List<Point> path = new ArrayList<Point>();
+	     	        Point p1 = new Point(1,0);
+	     	        Point p2 = new Point(2,0);
+	     	        Point p3 = new Point(3,0);
+	     	        Point p4 = new Point(2,4);
+	     	        path.add(p1);
+	     	        path.add(p2);
+	     	        path.add(p3);
+	     	        //path.add(p4);
+	     	        
+	     	        ObjRobot.setX(ObjRobot.getX()+1);
+	     	        
+	     	        for(int i=0; i < path.size(); i++) {
+	     	        	int x = ObjRobot.getX();
+	     	        	int y = ObjRobot.getY();
+	     	        	
+	     	        	//andar na hortizontal para postiva
+	     	        	if(path.get(i).x == x+1){
+	     	        		robot.setBounds((x+1)*tamanhoX, (ObjRobot.getY()+1)*tamanhoY, tamanhoX, tamanhoY);
+	     		        	background.add(robot);
+	     		        	ObjRobot.setX(x);
+	     		        	System.out.println(ObjRobot.getX());
+	     	        	}
+	     	        	//andar na vertical para postiiva
+	     	        	else if(path.get(i).y == y+1) {
+	     	        		robot.setBounds((ObjRobot.getX()+1)*tamanhoX, (y+1)*tamanhoY, tamanhoX, tamanhoY);
+	     		        	background.add(robot);
+	     		        	ObjRobot.setY(y);
+	     	        	}   	    
+	     	        	//falta outras hipoteses diagonais e andar para tras
+	     	        }
+	                repaint();
+	            }
+	        });
+	        
+	       
+	        
+	        timer.setRepeats(true);
+	        timer.setCoalesce(true);
+	        timer.start();
 	        pack();
 	        setLocationRelativeTo(null);
 	        setVisible(true);
