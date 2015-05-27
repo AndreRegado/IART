@@ -50,7 +50,7 @@ public class main {
 		       // A.printList();
 	        }
 	        
-	        State initial = new State (1,1,null,0,0);
+	        State initial = new State (rob.getX(),rob.getY(),null,0,0);
 	        State target =  new State (5,5);
 	        A_star B = new A_star(initial, target, obs, "Diagonal","8d");
 	        B.start();
