@@ -68,11 +68,11 @@ public class main {
 	        }
 	        
 	        
-	        State initial = new State (rob.getX(),rob.getY(),null,0,0);
+	       /* State initial = new State (rob.getX(),rob.getY(),null,0,0);
         	State target =  new State (ware.getX(),ware.getY());
 	        A_star_Robot C = new A_star_Robot(initial, target, "Robot",boxes);
 	        C.start();
-	        
+	        */
 	        
 	        Interface intObj = new Interface(rob, ware, boxes, obs);
 	    }
