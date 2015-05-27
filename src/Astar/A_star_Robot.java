@@ -62,6 +62,7 @@ public class A_star_Robot {
 	}
 	private int getSurrounding(State estado){
 		Point ponto = new Point(estado.getX(),estado.getY());
+		////////////////////////////////////////////////////////////////////7
 		ponto.x-=1;
 		ponto.y-=1;
 		checkPoint(estado, ponto,true);
@@ -103,7 +104,7 @@ public class A_star_Robot {
 		
 		//////////////////////////7777
 		//calcular h e g e f
-		int g=findG(diagonal,estado),h=findH(estadonovo),f=g+h;
+		int g=findG(estadonovo,estado),h=findH(estadonovo),f=g+h;
 		estadonovo.setG(g);
 		///////////////////////////////////heuristica
 		estadonovo.setH(h);	
@@ -139,18 +140,16 @@ public class A_star_Robot {
 		openList.add(estadonovo);
 		return 0;
 	}
-	private int findG(boolean diag,State estado){
-		if(!diag)
-			return estado.getG()+10;
-		else
-			return estado.getG()+14;
-	
+	private int findG(State estado,State novoestado){
+		State initial = new State (estado.getX(),estado.getY(),null,0,0);
+    	State target =  new State (novoestado.getX(),novoestado.getY());
+    	List<Point> paredes = new ArrayList<Point>();
+    	A_star B = new A_star(initial, target, paredes, "Diagonal","8d");
+    	B.start();
+    	return B.getCost();
 	}
 	private int findH(State estado){
-		if(heuristicOption.equals("Manhattan"))
-			return heuristic.Manhattan(estado, goal);
-		else 
-			return heuristic.Diagonal(estado, goal);
+		return 0;
 	}
 	
 
