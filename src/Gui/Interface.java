@@ -32,6 +32,7 @@ public class Interface extends JFrame{
 	  private JLabel obst2;
 	  private JLabel box2;
 	  private JLabel war2;
+	  private JLabel rasto;
 	  /*private JLabel rob = new JLabel(new ImageIcon("images/robot.png"));
 	  private JPanel pane;*/
 	  
@@ -40,6 +41,14 @@ public class Interface extends JFrame{
 	  	
 	  	private PlayButtonHandler pbHandler;
 	    private ExitButtonHandler ebHandler;
+	    
+        final List<Point> path = new ArrayList<Point>();
+	        Point p1 = new Point(1,0);
+	        Point p2 = new Point(2,1);
+	        Point p3 = new Point(3,1);
+	        Point p4 = new Point(2,4);
+	      
+	        int vezes=0;
 	 
 	 public Interface(final Robot ObjRobot, Warehouse ObjWare, List<Box> ObjBoxes, List<Point> ObjObstacles)
 
@@ -83,6 +92,8 @@ public class Interface extends JFrame{
 			obst2 = new JLabel(obst);
 			ImageIcon war = new ImageIcon("images/warehouse.png");
 			war2 = new JLabel(war);
+			final ImageIcon rasto1 = new ImageIcon("images/rasto.png");
+			rasto = new JLabel(rasto1);
 			
 			List<Integer> ArrayX = new ArrayList<Integer>();
 			List<Integer> ArrayY = new ArrayList<Integer>();
@@ -146,12 +157,13 @@ public class Interface extends JFrame{
 		    int dimensaoY = maiorY - menorY;
 		    //System.out.println("Dim X" + dimensaoX + " Dim Y" + dimensaoY);
 		    
-		    final int tamanhoX = (800 / dimensaoX);
+		    final int tamanhoX = 800 / dimensaoX;
 		    final int tamanhoY = 600 / dimensaoY;
 		    //System.out.println("TAM X" + tamanhoX + " TAM Y" + tamanhoY);
 		    
 	        robot.setLayout(null);
 	        robot.setBounds((ObjRobot.getX()+1)*tamanhoX, (ObjRobot.getY()+1)*tamanhoY,tamanhoX, tamanhoY);
+	        
 	        
 	        for(int i=0; i< ObjBoxes.size(); i++){
 	        	JLabel newLabel = new JLabel(box);
@@ -173,49 +185,113 @@ public class Interface extends JFrame{
 	        background.add(robot);
 	        background.add(war2);
 	        
+	        //po teste
+	        path.add(p1);
+	        path.add(p2);
+	        path.add(p3);
+	        //path.add(p4);
 	        
 	        Timer timer = new Timer(500, new ActionListener() {
 	            public void actionPerformed(ActionEvent evt) {
-	            	 List<Point> path = new ArrayList<Point>();
-	     	        Point p1 = new Point(1,0);
-	     	        Point p2 = new Point(2,0);
-	     	        Point p3 = new Point(3,0);
-	     	        Point p4 = new Point(2,4);
-	     	        path.add(p1);
-	     	        path.add(p2);
-	     	        path.add(p3);
-	     	        //path.add(p4);
+	            	
+	            	int i = vezes;
+	     	        vezes++;
+	     	        if(vezes == path.size()+1){
+	     	        	try {
+	     	        	   for(int j=0; j < path.size(); j++) {
+	     	  	        	JLabel newLabel = new JLabel(rasto1);
+	     	  	        	newLabel.setLayout(null);
+	     	  	        	newLabel.setBounds((path.get(j).x+1)*tamanhoX, (path.get(j).y+1)*tamanhoY, tamanhoX, tamanhoY);
+	     	  	        	background.add(newLabel);
+	     	        	   }
+							Thread.sleep(50000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	     	        	System.exit(0);
+	     	        }
 	     	        
-	     	        ObjRobot.setX(ObjRobot.getX()+1);
-	     	        
-	     	        for(int i=0; i < path.size(); i++) {
+	     	        //for(int i=0; i < path.size(); i++) {
 	     	        	int x = ObjRobot.getX();
 	     	        	int y = ObjRobot.getY();
 	     	        	
+	     	        	System.out.println("X- "+x + " Y " + y + "    " + "PX " + path.get(i).x + "  PY "+ path.get(i).y);
+	     	        	
 	     	        	//andar na hortizontal para postiva
-	     	        	if(path.get(i).x == x+1){
-	     	        		robot.setBounds((x+1)*tamanhoX, (ObjRobot.getY()+1)*tamanhoY, tamanhoX, tamanhoY);
+	     	        	if(path.get(i).x == x+1 && path.get(i).y == y){
+	     	        		robot.setBounds((path.get(i).x+1)*tamanhoX, (ObjRobot.getY()+1)*tamanhoY, tamanhoX, tamanhoY);
 	     		        	background.add(robot);
-	     		        	ObjRobot.setX(x);
+	     		        	ObjRobot.setX(path.get(i).x);
 	     		        	System.out.println(ObjRobot.getX());
+	     		        	
 	     	        	}
 	     	        	//andar na vertical para postiiva
-	     	        	else if(path.get(i).y == y+1) {
-	     	        		robot.setBounds((ObjRobot.getX()+1)*tamanhoX, (y+1)*tamanhoY, tamanhoX, tamanhoY);
+	     	        	else if(path.get(i).y == y+1 && path.get(i).x == x) {
+	     	        		robot.setBounds((ObjRobot.getX()+1)*tamanhoX, (path.get(i).y+1)*tamanhoY, tamanhoX, tamanhoY);
 	     		        	background.add(robot);
-	     		        	ObjRobot.setY(y);
-	     	        	}   	    
-	     	        	//falta outras hipoteses diagonais e andar para tras
-	     	        }
+	     		        	ObjRobot.setY(path.get(i).y);
+	     		        
+	     	        	}
+	     	        	//andar na horizontal para negativo
+	     	        	else if(path.get(i).x == x-1 && path.get(i).y == y) {
+	     	        		robot.setBounds((path.get(i).x-1)*tamanhoX, (ObjRobot.getY()+1)*tamanhoY, tamanhoX, tamanhoY);
+	     		        	background.add(robot);
+	     		        	ObjRobot.setX(path.get(i).x);
+	     		        
+	     	        	}  
+	     	        	//andar na vertical para negativo
+	     	        	else if(path.get(i).y == y-1 && path.get(i).x == x) {
+	     	        		robot.setBounds((ObjRobot.getX()+1)*tamanhoX, (path.get(i).y-1)*tamanhoY, tamanhoX, tamanhoY);
+	     		        	background.add(robot);
+	     		        	ObjRobot.setY(path.get(i).y);
+	     		        
+	     	        	} 
+	     	        	//andar na diagonal ++
+	     	        	else if(path.get(i).y == y+1 && path.get(i).x == x+1) {
+	     	        		robot.setBounds((path.get(i).x+1)*tamanhoX, (path.get(i).y+1)*tamanhoY, tamanhoX, tamanhoY);
+	     		        	background.add(robot);
+	     		        	ObjRobot.setY(path.get(i).y);
+	     		        	ObjRobot.setX(path.get(i).x);
+	     		        
+	     	        	} 
+	     	        	//andar na diagonal --
+	     	        	else if(path.get(i).y == y-1 && path.get(i).x == x-1) {
+	     	        		robot.setBounds((path.get(i).x-1)*tamanhoX, (path.get(i).y-1)*tamanhoY, tamanhoX, tamanhoY);
+	     		        	background.add(robot);
+	     		        	ObjRobot.setY(path.get(i).y);
+	     		        	ObjRobot.setX(path.get(i).x);
+	     		       
+	     	        	} 
+	     	        	//andar na diagonal +-
+	     	        	else if(path.get(i).y == y-1 && path.get(i).x == x+1) {
+	     	        		robot.setBounds((path.get(i).x+1)*tamanhoX, (path.get(i).y-1)*tamanhoY, tamanhoX, tamanhoY);
+	     		        	background.add(robot);
+	     		        	ObjRobot.setY(path.get(i).y);
+	     		        	ObjRobot.setX(path.get(i).x);
+	     		        	
+	     	        	} 
+	     	        	//andar na diagonal -+
+	     	        	else if(path.get(i).y == y+1 && path.get(i).x == x-1) {
+	     	        		robot.setBounds((path.get(i).x-1)*tamanhoX, (path.get(i).y+1)*tamanhoY, tamanhoX, tamanhoY);
+	     		        	background.add(robot);
+	     		        	ObjRobot.setY(path.get(i).y);
+	     		        	ObjRobot.setX(path.get(i).x);
+	     		        	
+	     	        	} 
+	     	             	        	     	        	
+	     	        //}
+	     	        
 	                repaint();
 	            }
 	        });
 	        
 	       
-	        
 	        timer.setRepeats(true);
 	        timer.setCoalesce(true);
 	        timer.start();
+	        
+	        
 	        pack();
 	        setLocationRelativeTo(null);
 	        setVisible(true);
@@ -226,7 +302,7 @@ public class Interface extends JFrame{
 	    {
 	        public void actionPerformed(ActionEvent e)
 	        {
-
+	        	
 	            System.exit(0);
 
 	        }
