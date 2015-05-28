@@ -1,4 +1,8 @@
 /Astar/
-/Robot/
-/Parser/
 /Gui/
+/Parser/
+<<<<<<< HEAD
+/Gui/
+=======
+/Robot/
+>>>>>>> origin/master
