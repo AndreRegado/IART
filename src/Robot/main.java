@@ -75,9 +75,8 @@ public class main {
 	        
 	        State initial = new State (rob.getX(),rob.getY(),null,0,0);
         	State target =  new State (ware.getX(),ware.getY());
-        	System.out.println("aaaaaaa"+boxes.size());
-	       // A_star_Robot C = new A_star_Robot(initial, target, "Robot",boxes,obs,rob.getCap());
-	       // C.start();
+	        A_star_Robot C = new A_star_Robot(rob, obs, ware,boxes);
+	        C.start();
 	       // C.printList();
 	       
 	        
