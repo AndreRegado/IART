@@ -55,16 +55,26 @@ public class A_star_Robot {
 				break;
 
 		}
-		backtrack();
-		for(Point x:points){
-			System.out.println("X: "+x.x+" Y: "+x.y);
+		//backtrack();
+		getPoints();
+		for(Point kl:points){
+			System.out.println(kl.x+"  "+kl.y);
 		}
 		return points;
 	}
-	private void backtrack(){
-		for(State_Robot point:closedList){
-			points.add(point.getPoint());
+	private void getPoints(){
+		int size=closedList.size()-1,counter;
+		for(counter=0;counter<size;counter++){
+			 A_star A = new A_star(closedList.get(counter), closedList.get(counter+1), obstaculos, "Diagonal","8d");
+		     points.addAll(A.start());
 		}
+	}
+	private List<Point> backtrack(){
+		List<Point> ol = new ArrayList<Point>();
+		for(State_Robot point:closedList){
+			ol.add(point.getPoint());
+		}
+		return ol;
 	}
 	private int getSurrounding(State_Robot estado){
 		
@@ -91,9 +101,7 @@ public class A_star_Robot {
 	private int checkState(State_Robot estado, State_Robot novoestado){
 		novoestado.setParent(estado);
 		novoestado.incBoxesPicked();
-		int g=estado.getG()+heuristicRobot(estado,novoestado);
-		novoestado.setG(g);
-		novoestado.setF(g);
+		novoestado = heuristicRobot(estado,novoestado);
 		novoestado.setCurrentWeight(estado.getCurrentWeight()+novoestado.getWeight());
 		if(novoestado.comparar(armazem))
 			novoestado.setCurrentWeight(0);
@@ -135,9 +143,12 @@ public class A_star_Robot {
 		return 0;
 		
 	}
-	private int heuristicRobot(State_Robot estado, State_Robot novoestado){
+	private State_Robot heuristicRobot(State_Robot estado, State_Robot novoestado){
 		  A_star A = new A_star(estado, novoestado, obstaculos, "Diagonal","8d");
-	      A.start();
-	     return A.getCost();
+	     // novoestado.setPath(A.start());
+	      int g=estado.getG()+A.getCost();
+	      novoestado.setG(g);
+	      novoestado.setF(g);
+	     return novoestado;
 	}
 }
