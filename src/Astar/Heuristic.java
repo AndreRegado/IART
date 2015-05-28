@@ -7,7 +7,7 @@ public class Heuristic {
 	}
 	
 	public int Diagonal(State estado, State goal){
-		int x = Math.abs(estado.getX()-goal.getX());
+		int x =	 Math.abs(estado.getX()-goal.getX());
 		int y = Math.abs(estado.getY()-goal.getY());
 				if (x > y)
 				     return 14*y + 10*(x-y);

@@ -146,7 +146,7 @@ public class Interface extends JFrame{
 		    int dimensaoY = maiorY - menorY;
 		    //System.out.println("Dim X" + dimensaoX + " Dim Y" + dimensaoY);
 		    
-		    final int tamanhoX = 800 / dimensaoX;
+		    final int tamanhoX = (800 / dimensaoX);
 		    final int tamanhoY = 600 / dimensaoY;
 		    //System.out.println("TAM X" + tamanhoX + " TAM Y" + tamanhoY);
 		    

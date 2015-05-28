@@ -9,6 +9,7 @@ import Astar.State;
 import Gui.Interface;
 public class main {
 	    public static void main(String[] args) {
+	    	
 	        System.out.println("Hello, World!");
 	        Reader parser=new Reader();
 	        
@@ -31,8 +32,9 @@ public class main {
 	        		ware=(Warehouse) what;
 	        	else if(what instanceof Box)
 	        		boxes.add((Box) what);
-	        	else if(what instanceof Wall)
+	        	else if(what instanceof Wall){
 	        		obstacles.add((Wall) what);
+	        		System.out.println(((Wall) what).getX1()+ "  "+((Wall) what).getY1()+"  "+((Wall) what).getX2()+"  "+((Wall) what).getY2());}
 	        	else{
 	        		System.out.println("Argument error");
 	        		System.exit(4);
@@ -46,17 +48,20 @@ public class main {
 	        
 	        for(Wall obstaculos : obstacles){
 	        	State initial = new State (obstaculos.getX1(),obstaculos.getY1(),null,0,0);
+	        	System.out.println("X-" +obstaculos.getX1()+" Y-"+obstaculos.getY1());
 		        State target =  new State (obstaculos.getX2(),obstaculos.getY2());
-		        A_star A = new A_star(initial, target, o, "Manhattan","4d");
+		        System.out.println("X-" +obstaculos.getX2()+" Y-"+obstaculos.getY2());
+		        A_star A = new A_star(initial, target, o, "Diagonal","4d");
 		        obs.addAll(A.start());
 		       // A.printList();
 	        }
 	        
+	        System.out.println("------------------------------------");
 	        int counter=0;
 	        List<List<Point>> todosPoints = new ArrayList<List<Point>>();
 	        int[] custo = new int[boxes.size()];
 	        int[] peso = new int[boxes.size()];
-	        for(Box box: boxes){
+	       /* for(Box box: boxes){
 	        	State initial = new State (rob.getX(),rob.getY(),null,0,0);
 	        	State target =  new State (box.getX(),box.getY());
 	        	A_star B = new A_star(initial, target, obs, "Diagonal","8d");
@@ -66,13 +71,15 @@ public class main {
 	        	counter++;
 	        	B.printList();
 	        }
-	        
-	        
-	       /* State initial = new State (rob.getX(),rob.getY(),null,0,0);
-        	State target =  new State (ware.getX(),ware.getY());
-	        A_star_Robot C = new A_star_Robot(initial, target, "Robot",boxes);
-	        C.start();
 	        */
+	        
+	        State initial = new State (rob.getX(),rob.getY(),null,0,0);
+        	State target =  new State (ware.getX(),ware.getY());
+        	System.out.println("aaaaaaa"+boxes.size());
+	       // A_star_Robot C = new A_star_Robot(initial, target, "Robot",boxes,obs,rob.getCap());
+	       // C.start();
+	       // C.printList();
+	       
 	        
 	        Interface intObj = new Interface(rob, ware, boxes, obs);
 	    }

@@ -1,10 +1,10 @@
 package Astar;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import Robot.Point;
-
 
 public class A_star {
 	List<State> openList = new ArrayList<State>();
@@ -12,152 +12,162 @@ public class A_star {
 	List<Point> obstacles = new ArrayList<Point>();
 	List<Point> points = new ArrayList<Point>();
 	Heuristic heuristic = new Heuristic();
-	State goal,inicio;
+	State goal, inicio;
 	int maxCost;
-	
-	String heuristicOption,directions;
-	public A_star(State inicial, State goal1,List<Point> obs, String heuristicOpt, String direction){
-		directions=direction;
-		inicio=inicial;
-		goal=goal1;
-		heuristicOption=heuristicOpt;
-		obstacles=obs;
+
+	String heuristicOption, directions;
+
+	public A_star(State inicial, State goal1, List<Point> obs,
+			String heuristicOpt, String direction) {
+		directions = direction;
+		inicio = inicial;
+		goal = goal1;
+		heuristicOption = heuristicOpt;
+		obstacles = obs;
 		openList.clear();
 		closeList.clear();
 		openList.add(inicial);
 	}
-	public List<Point> start(){
+
+	public List<Point> start() {
 		State present = null;
-		while(!openList.isEmpty()){
-			
-			present= openList.get(0);
+		while (!openList.isEmpty()) {
+
+			present = openList.get(0);
+			if (present.comparar(goal))
+				break;
 			closeList.add(present);
 			openList.remove(0);
-			if(getSurrounding(present)==1)
+			if (getSurrounding(present) == 1)
 				break;
-			
-			
+
 		}
-		maxCost=goal.getF();
+		maxCost = goal.getF();
 		backtrack(goal);
-		points.remove(points.size() -1);
-		
+		if (points.size() != 1)
+			points.remove(points.size() - 1);
+
 		return points;
 	}
-	public int getCost(){
+
+	public int getCost() {
 		return goal.getF();
 	}
-	private void backtrack(State estado){
-			
-		if(!estado.comparar(inicio)){
+
+	private void backtrack(State estado) {
+
+		if (!estado.comparar(inicio)) {
 			backtrack(estado.getParent());
 		}
 		points.add(estado.getPoint());
 	}
-	public void printList(){
-		for(Point point : points){
-			System.out.println("X: "+point.x+" , Y: "+point.y);
+
+	public void printList() {
+		for (Point point : points) {
+			System.out.println("X: " + point.x + " , Y: " + point.y);
 		}
 
 	}
-	private int getSurrounding(State estado){
-		Point ponto = new Point(estado.getX(),estado.getY());
-		ponto.x-=1;
-		ponto.y-=1;
-		checkPoint(estado, ponto,true);
-		
-		ponto.y+=1;
-		checkPoint(estado, ponto,false);
-		
-		ponto.y+=1;
-		checkPoint(estado, ponto,true);
-		
-		ponto.x+=1;
-		checkPoint(estado, ponto,false);
-		
-		ponto.x+=1;
-		checkPoint(estado, ponto,true);
-		
-		ponto.y-=1;
-		checkPoint(estado, ponto,false);
-		
-		ponto.y-=1;
-		checkPoint(estado, ponto,true);
-		
-		ponto.x-=1;
-		checkPoint(estado, ponto,false);
-		
-		Collections.sort(openList,State.StateComparator);
-		State ne =openList.get(0);
-		if(ne.comparar(goal))
-		{
+
+	private int getSurrounding(State estado) {
+		Point ponto = new Point(estado.getX(), estado.getY());
+		ponto.x -= 1;
+		ponto.y -= 1;
+		checkPoint(estado, ponto, true);
+
+		ponto.y += 1;
+		checkPoint(estado, ponto, false);
+
+		ponto.y += 1;
+		checkPoint(estado, ponto, true);
+
+		ponto.x += 1;
+		checkPoint(estado, ponto, false);
+
+		ponto.x += 1;
+		checkPoint(estado, ponto, true);
+
+		ponto.y -= 1;
+		checkPoint(estado, ponto, false);
+
+		ponto.y -= 1;
+		checkPoint(estado, ponto, true);
+
+		ponto.x -= 1;
+		checkPoint(estado, ponto, false);
+
+		Collections.sort(openList, State.StateComparator);
+		State ne = openList.get(0);
+		if (ne.comparar(goal)) {
 			goal.setParent(ne);
 			goal.setF(ne.getF());
 			return 1;
 		}
 		return 0;
 	}
-	private int checkPoint(State estado, Point ponto,boolean diagonal){
-		if(diagonal && directions.equals("4d"))
+
+	private int checkPoint(State estado, Point ponto, boolean diagonal) {
+		if (diagonal && directions.equals("4d"))
 			return 0;
-		State estadonovo= new State(ponto.x,ponto.y, estado,0,0);
-		
-		if(isWall(ponto))
+		State estadonovo = new State(ponto.x, ponto.y, estado, 0, 0);
+
+		if (isWall(ponto))
 			return 0;
-		//////////////////////////7777
-		//calcular h e g e f
-		int g=findG(diagonal,estado),h=findH(estadonovo),f=g+h;
+
+		// ////////////////////////7777
+		// calcular h e g e f
+		int g = findG(diagonal, estado), h = findH(estadonovo), f = g + h;
 		estadonovo.setG(g);
-		///////////////////////////////////heuristica
-		estadonovo.setH(h);	
+		// /////////////////////////////////heuristica
+		estadonovo.setH(h);
 		estadonovo.setF(f);
-						
-		
-		int index,sizeOpen=openList.size(),sizeClose=closeList.size();
-		if(openList.contains(estadonovo)){
-			for(index=0;index<sizeOpen;index++){
-				if(openList.get(index).getPoint().equals(estadonovo.getPoint())){
-					if(openList.get(index).getF()>estadonovo.getF()){
-						openList.remove(index);
-						openList.add(estadonovo);
-						return 0;
-					}
+
+		int index, sizeOpen = openList.size(), sizeClose = closeList.size();
+
+		for (index = 0; index < sizeOpen; index++) {
+			if (openList.get(index).getPoint().equals(estadonovo.getPoint())) {
+				if (openList.get(index).getF() > estadonovo.getF()) {
+					openList.remove(index);
+					openList.add(estadonovo);
 					return 0;
-				}		
+				}
+				return 0;
 			}
 		}
-		if(closeList.contains(estadonovo)){
-			for(index=0;index<sizeClose;index++){
-				if(closeList.get(index).getPoint().equals(estadonovo.getPoint())){
-					if(closeList.get(index).getF()>estadonovo.getF()){
-						closeList.remove(index);
-						closeList.add(estadonovo);
-						return 0;
-					}
+
+		for (index = 0; index < sizeClose; index++) {
+			if (closeList.get(index).getPoint().equals(estadonovo.getPoint())) {
+				if (closeList.get(index).getF() > estadonovo.getF()) {
+					closeList.remove(index);
+					closeList.add(estadonovo);
 					return 0;
-				}		
+				}
+				return 0;
 			}
 		}
-		
+
 		openList.add(estadonovo);
 		return 0;
 	}
-	private int findG(boolean diag,State estado){
-		if(!diag)
-			return estado.getG()+10;
+
+	private int findG(boolean diag, State estado) {
+		if (!diag)
+			return estado.getG() + 10;
 		else
-			return estado.getG()+14;
-	
+			return estado.getG() + 14;
+
 	}
-	private int findH(State estado){
-		if(heuristicOption.equals("Manhattan"))
+
+	private int findH(State estado) {
+		if (heuristicOption.equals("Manhattan"))
 			return heuristic.Manhattan(estado, goal);
-		else 
+		else
 			return heuristic.Diagonal(estado, goal);
 	}
-	private boolean isWall(Point ponto){
-		if(!obstacles.isEmpty())
-			if(obstacles.contains(ponto))
+
+	private boolean isWall(Point ponto) {
+		if (!obstacles.isEmpty())
+			if (obstacles.contains(ponto))
 				return true;
 		return false;
 	}

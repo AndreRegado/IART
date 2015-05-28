@@ -44,7 +44,7 @@ public class Reader {
 			int y=Integer.parseInt(parts[2].substring(2));
 			
 			if(parts[0].substring(0,4).equals("robo")){
-				float cap=Float.parseFloat(parts[3].substring(11));
+				int cap=Integer.parseInt(parts[3].substring(11));
 				Robot rob=new Robot(x,y,cap);
 				return rob;
 			}

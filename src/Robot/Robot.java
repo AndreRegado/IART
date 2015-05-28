@@ -2,8 +2,8 @@ package Robot;
 
 public class Robot{
 	private Point p;
-	private float capacity;
-	public Robot(int x, int y, float cap) {
+	private int capacity;
+	public Robot(int x, int y, int cap) {
 		p=new Point(x,y);
 		capacity=cap;
 		// TODO Auto-generated constructor stub
@@ -25,7 +25,7 @@ public class Robot{
 	public void setY(int y) {
 		this.p.y = y;
 	}
-	public float getCap(){
+	public int getCap(){
 		return capacity;
 	}
 
