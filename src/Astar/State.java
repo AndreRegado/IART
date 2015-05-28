@@ -14,6 +14,7 @@ public class State implements Comparable<State>{
 	private State parent;
 	private int weight,currentweight;
 	private List<Point>path;
+	private int boxCounter;
 	public State(int x, int y) {
 		p=new Point(x,y);
 		// TODO Auto-generated constructor stub
@@ -26,7 +27,8 @@ public class State implements Comparable<State>{
 		f=g+h;
 		// TODO Auto-generated constructor stub
 	}
-	public State(int x, int y,State pai,int g1, int h1,int w,List<Point>pt) {
+	public State(int x, int y,State pai,int g1, int h1,int w,List<Point> pt) {
+		boxCounter=0;
 		p=new Point(x,y);
 		parent=pai;
 		g=g1;
@@ -36,6 +38,15 @@ public class State implements Comparable<State>{
 		currentweight=w;
 		path=pt;
 		// TODO Auto-generated constructor stub
+	}
+	public void setPath(List<Point> o){
+		path=o;
+	}
+	public int getboxCounter(){
+		return boxCounter;
+	}
+	public void setboxCounter(int w){
+		boxCounter=w;
 	}
 	public int getWeight(){
 		return weight;

@@ -49,7 +49,7 @@ public class Reader {
 				return rob;
 			}
 			else if(parts[0].substring(0,5).equals("caixa")){
-				float weight=Float.parseFloat(parts[3].substring(5));
+				int weight=Integer.parseInt(parts[3].substring(5));
 				Box box=new Box(x,y,weight);
 				return box;
 			}

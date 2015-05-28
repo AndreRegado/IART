@@ -8,17 +8,22 @@ import Robot.Box;
 import Robot.Point;
 
 public class A_star_Robot {
-	List<State> openList = new ArrayList<State>();
-	List<State> closeList = new ArrayList<State>();
-	List<Point> points = new ArrayList<Point>();
-	List<Box> boxes = new ArrayList<Box>();
-	Heuristic heuristic = new Heuristic();
-	State goal,inicio;
-	int maxCost;
+	private List<State> openList = new ArrayList<State>();
+	private List<State> closeList = new ArrayList<State>();
+	private List<Point> points = new ArrayList<Point>();
+	private List<Point> path1 = new ArrayList<Point>();
+	private List<State> boxes = new ArrayList<State>();
+	private Heuristic heuristic = new Heuristic();
+	private State goal,inicio;
+	int maxCost,totalBoxes;
 	
 	String heuristicOption;
 	public A_star_Robot(State inicial, State goal1, String heuristicOpt,List<Box> box){
-		boxes=box;
+
+		for(Box caixa:box){
+			boxes.add(boxtoState(caixa));
+		}
+		totalBoxes=box.size();
 		inicio=inicial;
 		goal=goal1;
 		heuristicOption=heuristicOpt;
@@ -65,36 +70,17 @@ public class A_star_Robot {
 		return estado;
 	}
 	private int getSurrounding(State estado){
-		/*Point ponto = new Point(estado.getX(),estado.getY());
-		////////////////////////////////////////////////////////////////////7
-		ponto.x-=1;
-		ponto.y-=1;
-		checkPoint(estado, ponto,true);
 		
-		ponto.y+=1;
-		checkPoint(estado, ponto,false);
-		
-		ponto.y+=1;
-		checkPoint(estado, ponto,true);
-		
-		ponto.x+=1;
-		checkPoint(estado, ponto,false);
-		
-		ponto.x+=1;
-		checkPoint(estado, ponto,true);
-		
-		ponto.y-=1;
-		checkPoint(estado, ponto,false);
-		
-		ponto.y-=1;
-		checkPoint(estado, ponto,true);
-		
-		ponto.x-=1;
-		checkPoint(estado, ponto,false);
-		*/
+		for(State novoestado: boxes){
+			if(!novoestado.comparar(estado)){
+				checkPoint(estado, novoestado);
+			}
+		}
+		if(estado.getCurrentWeight()!=0)
+			checkPoint(estado, goal);
 		Collections.sort(openList,State.StateComparator);
 		State ne =openList.get(0);
-		if(ne.comparar(goal))
+		if(ne.comparar(goal) && ne.getboxCounter()==totalBoxes)
 		{
 			goal.setParent(ne);
 			goal.setF(ne.getF());
@@ -102,14 +88,15 @@ public class A_star_Robot {
 		}
 		return 0;
 	}
-	private int checkPoint(State estado, Point ponto,boolean diagonal){
+	private int checkPoint(State estado, State estadonovo){
 		
-		State estadonovo= new State(ponto.x,ponto.y, estado,0,0);
+		//State estadonovo= new State(ponto.x,ponto.y, estado,0,0);
 		
 		//////////////////////////7777
 		//calcular h e g e f
-		int g=findG(estadonovo,estado),h=findH(estadonovo),f=g+h;
+		int g=findG(estado,estadonovo),h=findH(estadonovo),f=g+h;
 		estadonovo.setG(g);
+		estadonovo.setPath(path1);
 		///////////////////////////////////heuristica
 		estadonovo.setH(h);	
 		estadonovo.setF(f);
@@ -145,12 +132,13 @@ public class A_star_Robot {
 		return 0;
 	}
 	private int findG(State estado,State novoestado){
+		path1.clear();
 		State initial = new State (estado.getX(),estado.getY(),null,0,0);
     	State target =  new State (novoestado.getX(),novoestado.getY());
     	List<Point> paredes = new ArrayList<Point>();
     	A_star B = new A_star(initial, target, paredes, "Diagonal","8d");
-    	B.start();
-    	return B.getCost();
+    	path1=B.start();
+    	return B.getCost()+estado.getG();
 	}
 	private int findH(State estado){
 		return 0;
