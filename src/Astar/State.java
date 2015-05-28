@@ -1,6 +1,7 @@
 package Astar;
 
 import java.util.Comparator;
+import java.util.List;
 
 import Robot.Point;
 
@@ -11,7 +12,8 @@ public class State implements Comparable<State>{
 	private int g;
 	private int h;
 	private State parent;
-	
+	private int weight,currentweight;
+	private List<Point>path;
 	public State(int x, int y) {
 		p=new Point(x,y);
 		// TODO Auto-generated constructor stub
@@ -23,6 +25,29 @@ public class State implements Comparable<State>{
 		h=h1;
 		f=g+h;
 		// TODO Auto-generated constructor stub
+	}
+	public State(int x, int y,State pai,int g1, int h1,int w,List<Point>pt) {
+		p=new Point(x,y);
+		parent=pai;
+		g=g1;
+		h=h1;
+		f=g+h;
+		weight=w;
+		currentweight=w;
+		path=pt;
+		// TODO Auto-generated constructor stub
+	}
+	public int getWeight(){
+		return weight;
+	}
+	public void addWeight(int w){
+		currentweight+=w;
+	}
+	public int getCurrentWeight(){
+		return currentweight;
+	}
+	public void setWeight(int w){
+		weight=w;
 	}
 	public Point getPoint(){
 		return p;

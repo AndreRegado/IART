@@ -60,8 +60,12 @@ public class A_star_Robot {
 		}
 
 	}
+	private State boxtoState(Box caixa){
+		State estado = new State(caixa.getX(), caixa.getY(), null, 0, 0,caixa.getWeight(),null);
+		return estado;
+	}
 	private int getSurrounding(State estado){
-		Point ponto = new Point(estado.getX(),estado.getY());
+		/*Point ponto = new Point(estado.getX(),estado.getY());
 		////////////////////////////////////////////////////////////////////7
 		ponto.x-=1;
 		ponto.y-=1;
@@ -87,7 +91,7 @@ public class A_star_Robot {
 		
 		ponto.x-=1;
 		checkPoint(estado, ponto,false);
-		
+		*/
 		Collections.sort(openList,State.StateComparator);
 		State ne =openList.get(0);
 		if(ne.comparar(goal))
