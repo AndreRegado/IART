@@ -24,7 +24,6 @@ public class A_star_Robot {
 		closedList = new ArrayList<State_Robot>();
 		caixas = new ArrayList<State_Robot>();
 		points = new ArrayList<Point>();
-		obstaculos = new ArrayList<Point>();
 		
 		State_Robot estado_pai = null;
 		maxweight = robo.getCap();
