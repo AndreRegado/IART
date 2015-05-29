@@ -76,11 +76,11 @@ public class main {
 	        State initial = new State (rob.getX(),rob.getY(),null,0,0);
         	State target =  new State (ware.getX(),ware.getY());
 	        A_star_Robot C = new A_star_Robot(rob, obs, ware,boxes);
-	        C.start();
+	        List<Point> PathRobot =  C.start();
 	       // C.printList();
 	       
 	        
-	        Interface intObj = new Interface(rob, ware, boxes, obs);
+	        Interface intObj = new Interface(rob, ware, boxes, obs, PathRobot);
 	    }
 	   
 
