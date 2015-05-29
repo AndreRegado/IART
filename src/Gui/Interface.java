@@ -28,6 +28,7 @@ public class Interface extends JFrame{
 	  JButton exitB;
 	  
 	   Pane background; 
+	   JLabel back;
 	   JLabel robot;
 	   JLabel obst2;
 	   JLabel box2;
@@ -39,6 +40,7 @@ public class Interface extends JFrame{
 	   ImageIcon obst;
 	   ImageIcon war;
 	   ImageIcon rasto1;
+	   ImageIcon backg;
 	  
 
 	    //Button handlers:
@@ -46,11 +48,7 @@ public class Interface extends JFrame{
 	  	private PlayButtonHandler pbHandler;
 	    private ExitButtonHandler ebHandler;
 	    
-        final List<Point> path = new ArrayList<Point>();
-	    Point p1 = new Point(1,0);
-	    Point p2 = new Point(2,1);
-	    Point p3 = new Point(3,1);
-	    Point p4 = new Point(2,4);
+        List<Point> path;
 	      
 	    int vezes=0;
 	    
@@ -59,7 +57,7 @@ public class Interface extends JFrame{
 	    List<Box> ObjBoxes;
 	    List<Point> ObjObstacles;
 	 
-	 public Interface(final Robot ObjRobot, Warehouse ObjWare, List<Box> ObjBoxes, List<Point> ObjObstacles)
+	 public Interface(final Robot ObjRobot, Warehouse ObjWare, List<Box> ObjBoxes, List<Point> ObjObstacles, List<Point> PathRobot)
 
 	    {	
 		 
@@ -67,6 +65,7 @@ public class Interface extends JFrame{
 		 	this.ObjWare = ObjWare;
 		 	this.ObjBoxes = ObjBoxes;
 		 	this.ObjObstacles = ObjObstacles;
+		 	this.path = PathRobot;
 
 	        setTitle("Robot box catching Simulator!");
 	        setLayout(new BorderLayout());
@@ -108,6 +107,8 @@ public class Interface extends JFrame{
 			war2 = new JLabel(war);
 			rasto1 = new ImageIcon("images/rasto.png");
 			rasto = new JLabel(rasto1);
+			backg = new ImageIcon("images/background.jpg");
+			back = new JLabel(backg);
    
 	        pack();
 	        setLocationRelativeTo(null);
@@ -222,11 +223,6 @@ public class Interface extends JFrame{
 		        background.add(robot);
 		        background.add(war2);
 		        
-		        //po teste
-		        path.add(p1);
-		        path.add(p2);
-		        path.add(p3);
-		        //path.add(p4);
 		        
 		        Timer timer = new Timer(500, new ActionListener() {
 		            public void actionPerformed(ActionEvent evt) {
@@ -309,6 +305,12 @@ public class Interface extends JFrame{
 		     		        	ObjRobot.setY(path.get(i).y);
 		     		        	ObjRobot.setX(path.get(i).x);
 		     		        	
+		     	        	} 
+		     	        	else if(path.get(i).y == y && path.get(i).x == x) {
+		     	        		JLabel newLabel = new JLabel(backg);
+		    		        	newLabel.setLayout(null);
+		    		        	newLabel.setBounds((path.get(i).x+1)*tamanhoX, (path.get(i).y+1)*tamanhoY, tamanhoX, tamanhoY);
+		     		        	background.add(newLabel);
 		     	        	} 
 		     	             	        	     	        	
 		     	        //}
