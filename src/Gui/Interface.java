@@ -51,6 +51,8 @@ public class Interface extends JFrame{
         List<Point> path;
 	      
 	    int vezes=0;
+	    int RobotX;
+	    int RobotY;
 	    
 	    final Robot ObjRobot;
 	    Warehouse ObjWare;
@@ -66,6 +68,8 @@ public class Interface extends JFrame{
 		 	this.ObjBoxes = ObjBoxes;
 		 	this.ObjObstacles = ObjObstacles;
 		 	this.path = PathRobot;
+		 	this.RobotX = ObjRobot.getX();
+		 	this.RobotY = ObjRobot.getY();
 
 	        setTitle("Robot box catching Simulator!");
 	        setLayout(new BorderLayout());
@@ -235,6 +239,7 @@ public class Interface extends JFrame{
 		     	        if(vezes == path.size()+1){
 		     	        	
 		     	        	System.exit(0);
+		     	        
 		     	        }
 		     	        
 		     	        //for(int i=0; i < path.size(); i++) {
@@ -305,10 +310,13 @@ public class Interface extends JFrame{
 		     		        	
 		     	        	} 
 		     	        	else if(path.get(i).y == y && path.get(i).x == x) {
-		     	        		JLabel newLabel = new JLabel(backg);
-		    		        	newLabel.setLayout(null);
-		    		        	newLabel.setBounds((path.get(i).x+1)*tamanhoX, (path.get(i).y+1)*tamanhoY, tamanhoX, tamanhoY);
-		    		        	background.add(newLabel);
+		     	        		if(x == RobotX && y == RobotY) { }
+		     	        		else {
+			     	        		JLabel newLabel = new JLabel(backg);
+			    		        	newLabel.setLayout(null);
+			    		        	newLabel.setBounds((path.get(i).x+1)*tamanhoX, (path.get(i).y+1)*tamanhoY, tamanhoX, tamanhoY);
+			    		        	background.add(newLabel);
+		     	        		}
 		     	        	} 
 		     	             	        	     	        	
 		     	        //}
