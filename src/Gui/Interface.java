@@ -101,22 +101,24 @@ public class Interface extends JFrame{
 			robot = new JLabel(rob);
 			box = new ImageIcon("images/box.png");
 			box2 = new JLabel(box);
-			obst = new ImageIcon("images/obst.png");
+
+			
+			obst = new ImageIcon("images/obst.gif");
 			obst2 = new JLabel(obst);
-			war = new ImageIcon("images/warehouse.png");
+			war = new ImageIcon("images/warehouse.gif");
 			war2 = new JLabel(war);
-			rasto1 = new ImageIcon("images/rasto.png");
+			rasto1 = new ImageIcon("images/box.png");
 			rasto = new JLabel(rasto1);
-			backg = new ImageIcon("images/background.jpg");
+			backg = new ImageIcon("images/square.jpg");
 			back = new JLabel(backg);
    
-	        pack();
-	        setLocationRelativeTo(null);
-	        setVisible(true);
+			Dimension d = new Dimension(800,629);
+            setPreferredSize(d);
+            pack();
+            setResizable(false);
+            setVisible(true);
 
 	    }
-	 
-	 public void Game(){}
 	 
 	 
 	 public class ExitButtonHandler implements ActionListener
@@ -198,6 +200,7 @@ public class Interface extends JFrame{
 			    final int tamanhoX = 800 / dimensaoX;
 			    final int tamanhoY = 600 / dimensaoY;
 			    //System.out.println("TAM X" + tamanhoX + " TAM Y" + tamanhoY);
+			   
 			    
 		        robot.setLayout(null);
 		        robot.setBounds((ObjRobot.getX()+1)*tamanhoX, (ObjRobot.getY()+1)*tamanhoY,tamanhoX, tamanhoY);
@@ -230,12 +233,7 @@ public class Interface extends JFrame{
 		            	int i = vezes;
 		     	        vezes++;
 		     	        if(vezes == path.size()+1){
-		     	        	   for(int j=0; j < path.size(); j++) {
-		     	  	        	JLabel newLabel = new JLabel(rasto1);
-		     	  	        	newLabel.setLayout(null);
-		     	  	        	newLabel.setBounds((path.get(j).x+1)*tamanhoX, (path.get(j).y+1)*tamanhoY, tamanhoX, tamanhoY);
-		     	  	        	background.add(newLabel);
-		     	        	   }
+		     	        	
 		     	        	System.exit(0);
 		     	        }
 		     	        
@@ -247,7 +245,7 @@ public class Interface extends JFrame{
 		     	        	
 		     	        	//andar na hortizontal para postiva
 		     	        	if(path.get(i).x == x+1 && path.get(i).y == y){
-		     	        		robot.setBounds((path.get(i).x+1)*tamanhoX, (ObjRobot.getY()+1)*tamanhoY, tamanhoX, tamanhoY);
+		     	        		robot.setBounds((path.get(i).x+1)*tamanhoX, (y+1)*tamanhoY, tamanhoX, tamanhoY);
 		     		        	background.add(robot);
 		     		        	ObjRobot.setX(path.get(i).x);
 		     		        	System.out.println(ObjRobot.getX());
@@ -262,14 +260,14 @@ public class Interface extends JFrame{
 		     	        	}
 		     	        	//andar na horizontal para negativo
 		     	        	else if(path.get(i).x == x-1 && path.get(i).y == y) {
-		     	        		robot.setBounds((path.get(i).x-1)*tamanhoX, (ObjRobot.getY()+1)*tamanhoY, tamanhoX, tamanhoY);
+		     	        		robot.setBounds((path.get(i).x+1)*tamanhoX, (path.get(i).y+1)*tamanhoY, tamanhoX, tamanhoY);
 		     		        	background.add(robot);
 		     		        	ObjRobot.setX(path.get(i).x);
 		     		        
 		     	        	}  
 		     	        	//andar na vertical para negativo
 		     	        	else if(path.get(i).y == y-1 && path.get(i).x == x) {
-		     	        		robot.setBounds((ObjRobot.getX()+1)*tamanhoX, (path.get(i).y-1)*tamanhoY, tamanhoX, tamanhoY);
+		     	        		robot.setBounds((path.get(i).x+1)*tamanhoX, (path.get(i).y+1)*tamanhoY, tamanhoX, tamanhoY);
 		     		        	background.add(robot);
 		     		        	ObjRobot.setY(path.get(i).y);
 		     		        
@@ -284,7 +282,7 @@ public class Interface extends JFrame{
 		     	        	} 
 		     	        	//andar na diagonal --
 		     	        	else if(path.get(i).y == y-1 && path.get(i).x == x-1) {
-		     	        		robot.setBounds((path.get(i).x-1)*tamanhoX, (path.get(i).y-1)*tamanhoY, tamanhoX, tamanhoY);
+		     	        		robot.setBounds((path.get(i).x+1)*tamanhoX, (path.get(i).y+1)*tamanhoY, tamanhoX, tamanhoY);
 		     		        	background.add(robot);
 		     		        	ObjRobot.setY(path.get(i).y);
 		     		        	ObjRobot.setX(path.get(i).x);
@@ -292,7 +290,7 @@ public class Interface extends JFrame{
 		     	        	} 
 		     	        	//andar na diagonal +-
 		     	        	else if(path.get(i).y == y-1 && path.get(i).x == x+1) {
-		     	        		robot.setBounds((path.get(i).x+1)*tamanhoX, (path.get(i).y-1)*tamanhoY, tamanhoX, tamanhoY);
+		     	        		robot.setBounds((path.get(i).x+1)*tamanhoX, (path.get(i).y+1)*tamanhoY, tamanhoX, tamanhoY);
 		     		        	background.add(robot);
 		     		        	ObjRobot.setY(path.get(i).y);
 		     		        	ObjRobot.setX(path.get(i).x);
@@ -300,7 +298,7 @@ public class Interface extends JFrame{
 		     	        	} 
 		     	        	//andar na diagonal -+
 		     	        	else if(path.get(i).y == y+1 && path.get(i).x == x-1) {
-		     	        		robot.setBounds((path.get(i).x-1)*tamanhoX, (path.get(i).y+1)*tamanhoY, tamanhoX, tamanhoY);
+		     	        		robot.setBounds((path.get(i).x+1)*tamanhoX, (path.get(i).y+1)*tamanhoY, tamanhoX, tamanhoY);
 		     		        	background.add(robot);
 		     		        	ObjRobot.setY(path.get(i).y);
 		     		        	ObjRobot.setX(path.get(i).x);
@@ -310,7 +308,7 @@ public class Interface extends JFrame{
 		     	        		JLabel newLabel = new JLabel(backg);
 		    		        	newLabel.setLayout(null);
 		    		        	newLabel.setBounds((path.get(i).x+1)*tamanhoX, (path.get(i).y+1)*tamanhoY, tamanhoX, tamanhoY);
-		     		        	background.add(newLabel);
+		    		        	background.add(newLabel);
 		     	        	} 
 		     	             	        	     	        	
 		     	        //}
