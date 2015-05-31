@@ -144,7 +144,7 @@ public class A_star_Robot {
 	}
 	private State_Robot heuristicRobot(State_Robot estado, State_Robot novoestado){
 		  A_star A = new A_star(estado, novoestado, obstaculos, "Diagonal","8d");
-	     // novoestado.setPath(A.start());
+	     A.start();
 	      int g=estado.getG()+A.getCost();
 	      novoestado.setG(g);
 	      novoestado.setF(g);
