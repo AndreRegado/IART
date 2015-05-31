@@ -11,7 +11,14 @@ public class Pane extends JPanel {
 
     private Image background;
     private int index2;
-
+    
+    /**
+     * 
+     * @param image
+     * @param index
+     * 
+     * Construtor do Panel
+     */
     public Pane(Image image, int index) {     
         // This is just an example, I'd prefer to use setters/getters
         // and would also need to provide alignment options ;)
@@ -26,6 +33,9 @@ public class Pane extends JPanel {
     }
 
     @Override
+    /**
+     * Função repsonsavel por desenhar a imagem do panel
+     */
     protected void paintComponent(Graphics g) {
 
         super.paintComponent(g);

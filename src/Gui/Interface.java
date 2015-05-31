@@ -59,6 +59,16 @@ public class Interface extends JFrame{
 	    List<Box> ObjBoxes;
 	    List<Point> ObjObstacles;
 	 
+	    /**
+	     * 
+	     * @param ObjRobot
+	     * @param ObjWare
+	     * @param ObjBoxes
+	     * @param ObjObstacles
+	     * @param PathRobot
+	     * 
+	     * Construtor da Interface
+	     */
 	 public Interface(final Robot ObjRobot, Warehouse ObjWare, List<Box> ObjBoxes, List<Point> ObjObstacles, List<Point> PathRobot)
 
 	    {	
@@ -124,7 +134,11 @@ public class Interface extends JFrame{
 
 	    }
 	 
-	 
+	 /**
+	  * 
+	  * Ação ao cliclar no botão Exit
+	  *
+	  */
 	 public class ExitButtonHandler implements ActionListener
 	    {
 	        public void actionPerformed(ActionEvent e)
@@ -134,6 +148,12 @@ public class Interface extends JFrame{
 	        }
 	    }
 	 
+	 /**
+	  * 
+	  * Função responsavel por, aquando carregar no botao "Run simulation!" , desenhar todos os objetos nas posições corretas e por fazer
+	  * o robô seguir o seu trajeto
+	  *
+	  */
 	 public class PlayButtonHandler implements ActionListener
 	    {
 	        public void actionPerformed(ActionEvent e)

@@ -13,6 +13,13 @@ import Robot.Wall;
 import Robot.Warehouse;
 
 public class Reader {
+	/**
+	 * 
+	 * @param filename
+	 * @return
+	 * 
+	 * função responsavel por ver se existe ou nao o ficheiro e ler todas as linhas desse mesmo ficheiro
+	 */
 	public List<Object> readFile(String filename){
 		List<Object> parser=new ArrayList<Object>();
 		try {
@@ -36,6 +43,13 @@ public class Reader {
 		return parser;
 	}
 
+	/**
+	 * 
+	 * @param line
+	 * @return
+	 * 
+	 * função responsavel por dividir a linha em partes e por criar os objetos que lê
+	 */
 	private Object understandLine(String line) {
 		// TODO Auto-generated method stub
 		String[] parts = line.split(" ");
