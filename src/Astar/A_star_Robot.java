@@ -19,6 +19,14 @@ public class A_star_Robot {
 	private List<State_Robot> openList,closedList;
 	private int boxes_picked;
 	
+	/**
+	 * 
+	 * @param robo
+	 * @param obstaculos
+	 * @param armazem
+	 * @param caixas1
+	 * Construtor class A_star_Robot
+	 */
 	public A_star_Robot(Robot robo, List<Point> obstaculos, Warehouse armazem, List<Box> caixas1){
 		openList = new ArrayList<State_Robot>();
 		closedList = new ArrayList<State_Robot>();
@@ -40,6 +48,11 @@ public class A_star_Robot {
 		openList.add(this.robo);
 		
 	}
+	
+	/**
+	 * Starts algorithm
+	 * @return
+	 */
 	public List<Point> start(){
 		
 		State_Robot present = null;
@@ -61,6 +74,9 @@ public class A_star_Robot {
 		}
 		return points;
 	}
+	/**
+	 * finds points of path
+	 */
 	private void getPoints(){
 		int size=closedList.size()-1,counter;
 		for(counter=0;counter<size;counter++){
@@ -68,6 +84,11 @@ public class A_star_Robot {
 		     points.addAll(A.start());
 		}
 	}
+	
+	/**
+	 * adds points to list recursivly
+	 * @return
+	 */
 	private List<Point> backtrack(){
 		List<Point> ol = new ArrayList<Point>();
 		for(State_Robot point:closedList){
@@ -75,6 +96,12 @@ public class A_star_Robot {
 		}
 		return ol;
 	}
+	
+	/**
+	 * finds avaiable points(boxes or warehouse)
+	 * @param estado
+	 * @return
+	 */
 	private int getSurrounding(State_Robot estado){
 		
 		if(estado.comparar(robo)){
@@ -97,10 +124,16 @@ public class A_star_Robot {
 		}
 		return 0;
 	}
+	/**
+	 * checks point
+	 * @param estado
+	 * @param novoestado
+	 * @return
+	 */
 	private int checkState(State_Robot estado, State_Robot novoestado){
 		novoestado.setParent(estado);
 		novoestado.incBoxesPicked();
-		novoestado = heuristicRobot(estado,novoestado);
+		novoestado = g_Robot(estado,novoestado);
 		novoestado.setCurrentWeight(estado.getCurrentWeight()+novoestado.getWeight());
 		if(novoestado.comparar(armazem))
 			novoestado.setCurrentWeight(0);
@@ -142,7 +175,13 @@ public class A_star_Robot {
 		return 0;
 		
 	}
-	private State_Robot heuristicRobot(State_Robot estado, State_Robot novoestado){
+	/**
+	 * gets value of g
+	 * @param estado
+	 * @param novoestado
+	 * @return
+	 */
+	private State_Robot g_Robot(State_Robot estado, State_Robot novoestado){
 		  A_star A = new A_star(estado, novoestado, obstaculos, "Diagonal","8d");
 	     A.start();
 	      int g=estado.getG()+A.getCost();
